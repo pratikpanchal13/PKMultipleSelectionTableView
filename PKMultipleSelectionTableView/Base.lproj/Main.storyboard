@@ -24,7 +24,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2b9-vA-Qbw">
                                 <rect key="frame" x="16" y="237" width="343" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.44463547780000001" green="0.70467768259999997" blue="0.72318248060000001" alpha="0.79849801939999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.12941176470588234" green="0.52941176470588236" blue="0.67450980392156867" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Click Me">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -43,7 +43,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.99528425929999997" green="0.89708587880000001" blue="0.95226476000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="qXe-lj-Kfm" firstAttribute="top" secondItem="Rsp-aK-M80" secondAttribute="bottom" constant="28" id="BdH-2o-9Eh"/>
                             <constraint firstItem="qXe-lj-Kfm" firstAttribute="centerX" secondItem="Pek-uz-aSa" secondAttribute="centerX" id="LKA-02-eJo"/>
@@ -78,13 +78,13 @@
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cwa-T9-ONF">
                                                 <rect key="frame" x="0.0" y="0.0" width="134" height="30"/>
-                                                <color key="backgroundColor" red="0.44463547780000001" green="0.70467768259999997" blue="0.72318248060000001" alpha="0.79849801939999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" red="0.11804566227532678" green="0.5" blue="0.67450980392156867" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="CSa-ce-JAa"/>
                                                     <constraint firstAttribute="width" constant="134" id="moQ-Oy-LSe"/>
                                                 </constraints>
                                                 <state key="normal" title="Back">
-                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
                                                     <action selector="btnBackClicked:" destination="Rhi-pX-zAl" eventType="touchUpInside" id="FPd-BJ-rQ1"/>
@@ -92,20 +92,20 @@
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t4r-S9-H2b">
                                                 <rect key="frame" x="213" y="0.0" width="134" height="30"/>
-                                                <color key="backgroundColor" red="0.44463547780000001" green="0.70467768259999997" blue="0.72318248060000001" alpha="0.79849801939999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" red="0.11804566227532678" green="0.5" blue="0.67450980392156867" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="Xr9-U4-5Kt"/>
                                                     <constraint firstAttribute="width" constant="134" id="iDE-Xc-Npx"/>
                                                 </constraints>
                                                 <state key="normal" title="Done">
-                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
                                                     <action selector="btnDoneClicked:" destination="Rhi-pX-zAl" eventType="touchUpInside" id="dPo-By-xe8"/>
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="Cwa-T9-ONF" secondAttribute="bottom" id="4ou-4s-41c"/>
                                             <constraint firstAttribute="bottom" secondItem="t4r-S9-H2b" secondAttribute="bottom" id="NEU-b5-Ta0"/>
@@ -116,35 +116,36 @@
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="74" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nEf-Gm-QDB">
                                         <rect key="frame" x="14" y="117" width="347" height="433"/>
-                                        <color key="backgroundColor" red="0.75620637690000003" green="0.3651680913" blue="0.44116170339999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.12941176470588234" green="0.52941176470588236" blue="0.67450980392156867" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="433" id="0tC-Ji-Q6d"/>
                                         </constraints>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="60" id="DT6-2A-J69" customClass="Cell" customModule="PKMultipleSelectionTableView" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="347" height="60"/>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="50" id="DT6-2A-J69" customClass="Cell" customModule="PKMultipleSelectionTableView" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="28" width="347" height="50"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DT6-2A-J69" id="0HW-Xv-mG1">
-                                                    <rect key="frame" x="0.0" y="0.0" width="347" height="59"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="347" height="49"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kc5-Zk-72S">
-                                                            <rect key="frame" x="6" y="19" width="305" height="21"/>
+                                                            <rect key="frame" x="6" y="14.5" width="305" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="5Vb-Xg-hMW"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" tag="101" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="unCheck" translatesAutoresizingMaskIntoConstraints="NO" id="DIU-kB-kMM">
-                                                            <rect key="frame" x="319" y="20" width="20" height="20"/>
+                                                            <rect key="frame" x="319" y="15" width="20" height="20"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="20" id="a1s-C9-gSK"/>
                                                                 <constraint firstAttribute="width" constant="20" id="rGb-SB-tsy"/>
                                                             </constraints>
                                                         </imageView>
                                                     </subviews>
+                                                    <color key="backgroundColor" red="0.12941176469999999" green="0.52941176469999995" blue="0.67450980390000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstItem="Kc5-Zk-72S" firstAttribute="leading" secondItem="0HW-Xv-mG1" secondAttribute="leading" constant="6" id="CWb-36-8uZ"/>
                                                         <constraint firstItem="DIU-kB-kMM" firstAttribute="centerY" secondItem="0HW-Xv-mG1" secondAttribute="centerY" id="EoB-2P-Ivf"/>
@@ -214,6 +215,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="unCheck" width="16" height="16"/>
+        <image name="unCheck" width="50" height="50"/>
     </resources>
 </document>

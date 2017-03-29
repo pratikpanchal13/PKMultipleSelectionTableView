@@ -21,12 +21,12 @@ class PKHomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(getIndexWithValue), name: NSNotification.Name("notify"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(getIndexWithData), name: NSNotification.Name("notify"), object: nil)
         
     }
  
     //MARK:- Get Notification Selected Indexes
-    func getIndexWithValue(notification : NSNotification)
+    func getIndexWithData(notification : NSNotification)
     {
         let UserData = notification.object as! NSDictionary
         
