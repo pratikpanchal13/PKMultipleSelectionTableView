@@ -15,9 +15,13 @@ class PKMultipleSelectionVC: UIViewController,UITableViewDelegate,UITableViewDat
     public var objGetHomeVCIndexes: [String] = []                     // HomeVC
     
     public var passingDataToHomeVC: NSMutableArray = []     //PKMultipleSelectionVC
+    
+    var isSelectAll : Bool = false
+
 
 
     @IBOutlet weak var tblView: UITableView!
+    @IBOutlet weak var btnSelectAll: UIButton!
     
     //Public Local Variable Declaration
     
@@ -44,6 +48,13 @@ class PKMultipleSelectionVC: UIViewController,UITableViewDelegate,UITableViewDat
             let indexPath = IndexPath(row: i, section: 0)
             tblView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
         }
+        
+        if(selectedData.count == arrContent.count){
+            btnSelectAll.setImage(UIImage(named: "Check"), for: UIControlState.normal)
+            isSelectAll = !isSelectAll;
+        }
+        
+        
         self.tblView.reloadData()
     }
 
@@ -56,6 +67,26 @@ class PKMultipleSelectionVC: UIViewController,UITableViewDelegate,UITableViewDat
         self.removeFromParentViewController()
     }
     
+    @IBAction func btnSelectALL(_ sender: Any) {
+
+        selectedData.removeAllObjects()
+        
+        if(!isSelectAll)
+        {
+            for i in arrContent {
+                
+                selectedData.add(arrContent.index(of: i))
+            }
+        }
+        
+        print("Selected Data \(selectedData)")
+        
+        let aStrImg:String = !isSelectAll ? "Check": "unCheck"
+        btnSelectAll.setImage(UIImage(named:aStrImg), for: UIControlState.normal)
+        isSelectAll = !isSelectAll
+        tblView.reloadData()
+        
+    }
     @IBAction func btnDoneClicked(_ sender: Any) {
     
         UserDefaults.standard.set(selectedData, forKey: "indexPath")
@@ -124,6 +155,17 @@ extension PKMultipleSelectionVC{
             let index  = indexPath.row
             selectedData.add(index)
         }
+        
+        if(isSelectAll && selectedData.count != arrContent.count){
+            btnSelectAll.setImage(UIImage(named: "unCheck"), for: UIControlState.normal)
+            isSelectAll = !isSelectAll;
+        }else if(selectedData.count == arrContent.count){
+            btnSelectAll.setImage(UIImage(named: "Check"), for: UIControlState.normal)
+            isSelectAll = !isSelectAll;
+        }
+        
+        
+
         tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.none)
     }
 }
