@@ -14,14 +14,30 @@ class PKMultipleSelectionVC: UIViewController,UITableViewDelegate,UITableViewDat
     public var objGetHomeVCData: [Int] = []                       // HomeVC
     public var objGetHomeVCIndexes: [String] = []                     // HomeVC
     
+    public var backgroundColorHeaderView: UIColor       = UIColor.init(colorLiteralRed: 76.0/255.0, green: 82.0/255.0, blue: 83.0/255.0, alpha: 1.0)
+    public var backgroundColorDoneButton: UIColor       = UIColor.init(colorLiteralRed: 87.0/255.0, green: 188.0/255.0, blue: 100.0/255.0, alpha: 1.0)
+    public var backgroundColorTableView: UIColor        = UIColor.init(colorLiteralRed: 59.0/255.0, green: 65.0/255.0, blue: 66.0/255.0, alpha: 1.0)
+    public var backgroundColorSelectALlTitle: UIColor   = UIColor.white
+    public var backgroundColorCellTitle: UIColor        = UIColor.init(colorLiteralRed: 87.0/255.0, green: 188.0/255.0, blue: 100.0/255.0, alpha: 1.0)
+    public var backgroundColorDoneTitle: UIColor        = UIColor.white
+
+
+
+    
+
+    
+    
     public var passingDataToHomeVC: NSMutableArray = []     //PKMultipleSelectionVC
     
     var isSelectAll : Bool = false
 
+    public var invitedUsers:( _ data : String, _ index:NSMutableArray)->() = {_ in}
 
 
     @IBOutlet weak var tblView: UITableView!
     @IBOutlet weak var btnSelectAll: UIButton!
+    @IBOutlet weak var viewHeader: UIView!
+    @IBOutlet weak var btnDone: UIButton!
     
     //Public Local Variable Declaration
     
@@ -30,13 +46,38 @@ class PKMultipleSelectionVC: UIViewController,UITableViewDelegate,UITableViewDat
     
     
     //MARK:- View Life Cycle
+    
+
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        arrContent = ["Mac","Iphone","IWatch","IPad","IPod","IMac"]
-        tblView.allowsMultipleSelection = true
+//        arrContent = ["Mac","Iphone","IWatch","IPad","IPod","IMac"]
+//        arrContent = ["1","2","3","4","5","6","7","8","9","10","11","12"]
         
+        self.config()
+        tblView.allowsMultipleSelection = true
+        tblView.tableFooterView = UIView(frame: .zero)
+    }
+    
+    
+    func config()
+    {
+        self.tblView.backgroundColor = backgroundColorTableView
+        self.btnSelectAll.setTitleColor(backgroundColorSelectALlTitle, for: UIControlState.normal)
+        self.viewHeader.backgroundColor = backgroundColorHeaderView
+        self.btnDone.backgroundColor = backgroundColorDoneButton
+        self.btnDone.setTitleColor(backgroundColorDoneTitle, for: UIControlState.normal)
+        
+    }
+    
+   public func setDataForMultipleSelection(data : [Any]){
+        
+        arrContent.addObjects(from: data)
 
+        print("arrContent is \(arrContent)")
+    
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -104,6 +145,9 @@ class PKMultipleSelectionVC: UIViewController,UITableViewDelegate,UITableViewDat
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "notify"), object: myDict)
         
+        let strData = passingDataToHomeVC.componentsJoined(by: ",")
+        self.invitedUsers(strData, selectedData)
+        
         self.willMove(toParentViewController: nil)
         self.view.removeFromSuperview()
         self.removeFromParentViewController()
@@ -130,6 +174,11 @@ class Cell: UITableViewCell {
 // Tableview Data Source & Delegate Method
 extension PKMultipleSelectionVC{
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
+        return 60.0;
+    }
+    
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return arrContent.count
@@ -142,7 +191,8 @@ extension PKMultipleSelectionVC{
         let aStrImg:String = selectedData.contains((indexPath.row)) ? "Check": "unCheck"
         let image: UIImage =  UIImage(named: aStrImg)!;
         cell?.imgVewCheckUnckeck.image = image;
-        
+        cell?.contentView.backgroundColor = backgroundColorTableView
+        cell?.lblName.textColor = backgroundColorCellTitle
         return cell!
     }
     

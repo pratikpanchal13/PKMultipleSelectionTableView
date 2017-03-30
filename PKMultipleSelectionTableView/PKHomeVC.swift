@@ -14,6 +14,8 @@ class PKHomeVC: UIViewController {
     public var inedexPass = [Int]()
     public var arrContentData = [String]()
     
+    var obj = PKMultipleSelectionVC()
+    
     @IBOutlet weak var btnClickMe: UIButton!
     
     
@@ -48,6 +50,18 @@ class PKHomeVC: UIViewController {
         
         objMultipleSelectionVC.objGetHomeVCData = inedexPass // If you want to pass value
         objMultipleSelectionVC.objGetHomeVCIndexes = arrContentData // If you want to pass value
+        objMultipleSelectionVC.arrContent = ["1","2","3","4","5","6","7"]  // Pass Array Data
+        
+        objMultipleSelectionVC.backgroundColorDoneButton = UIColor.green
+        objMultipleSelectionVC.backgroundColorHeaderView = UIColor.purple
+        objMultipleSelectionVC.backgroundColorTableView = UIColor.darkGray
+        objMultipleSelectionVC.backgroundColorCellTitle = UIColor.yellow
+        objMultipleSelectionVC.backgroundColorDoneTitle = UIColor.brown
+        objMultipleSelectionVC.backgroundColorSelectALlTitle = UIColor.magenta
+
+
+
+
         
         
         if let returnValue = UserDefaults.standard.object(forKey: "indexPath") as? Int {
@@ -55,9 +69,12 @@ class PKHomeVC: UIViewController {
             objMultipleSelectionVC.objGetHomeVCIndexes = arrContentData
         }
         
-        let screenSize: CGRect = UIScreen.main.bounds
-        objMultipleSelectionVC.view.frame = CGRect(x: screenSize.origin.x, y: screenSize.origin.y, width: screenSize.width * 1, height: screenSize.height * 1)
         
+        // Data Passing Usning Block
+        objMultipleSelectionVC.invitedUsers = { selectedUsers, index in
+            print("data is \(selectedUsers)",index)
+            self.btnClickMe.setTitle("\(selectedUsers)", for: UIControlState.normal)
+        }
         
         let transition = CATransition()
         transition.duration = 0.1
