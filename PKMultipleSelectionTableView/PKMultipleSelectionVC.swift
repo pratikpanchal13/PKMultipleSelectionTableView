@@ -40,6 +40,15 @@ class PKMultipleSelectionVC: UIViewController,UITableViewDelegate,UITableViewDat
         
         tblView.allowsMultipleSelection = true
         tblView.tableFooterView = UIView(frame: .zero)
+        
+        
+        let state = UIApplication.shared.applicationState
+        if state == .background {
+            print("App in Background")
+            let defaults = UserDefaults.standard
+            defaults.removeObject(forKey: "indexPath")
+            defaults.synchronize()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

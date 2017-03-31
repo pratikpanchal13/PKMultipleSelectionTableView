@@ -23,8 +23,11 @@ class PKHomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if let returnValue = UserDefaults.standard.object(forKey: "data") as? String {
+            self.btnClickMe.setTitle("\(returnValue)", for: UIControlState.normal)
+            
+        }
     }
- 
 
     //MARK:- Button Action
     @IBAction func btnClickMeOpen(_ sender: Any) {
@@ -43,13 +46,16 @@ class PKHomeVC: UIViewController {
 
         
         // Get Selected Index from PKMultipleSelectionVC
-        if let returnValue = UserDefaults.standard.object(forKey: "indexPath") as? [Int] {
-            objMultipleSelectionVC.objGetSelectedIndex = returnValue
+        if let returnIndex = UserDefaults.standard.object(forKey: "indexPath") as? [Int] {
+            objMultipleSelectionVC.objGetSelectedIndex = returnIndex
         }
+
         
         // Data Passing Usning Block
         objMultipleSelectionVC.passDataWithIndex = { arrayData, selectedIndex in
             self.btnClickMe.setTitle("\(arrayData)", for: UIControlState.normal)
+            UserDefaults.standard.set(arrayData, forKey: "data")
+            UserDefaults.standard.synchronize()
         }
         
         let transition = CATransition()
