@@ -23,35 +23,17 @@ class PKHomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(getIndexWithData), name: NSNotification.Name("notify"), object: nil)
-        
     }
  
-    //MARK:- Get Notification Selected Indexes
-    func getIndexWithData(notification : NSNotification)
-    {
-        let UserData = notification.object as! NSDictionary
-        
-        arrContentData  = (UserData["Data"])! as! [String]
-        inedexPass  = (UserData["indexPath"])! as! [Int]
-        
-        let string = arrContentData.joined(separator: ",")                  // Seperate String From Array
-        btnClickMe.setTitle(string, for: UIControlState.normal)             // Set Title
-        
-        
-    }
-    
-    
+
     //MARK:- Button Action
     @IBAction func btnClickMeOpen(_ sender: Any) {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let objMultipleSelectionVC:PKMultipleSelectionVC = storyboard.instantiateViewController(withIdentifier: "PKMultipleSelectionVC") as! PKMultipleSelectionVC
         
-        objMultipleSelectionVC.objGetHomeVCData = inedexPass // If you want to pass value
-        objMultipleSelectionVC.objGetHomeVCIndexes = arrContentData // If you want to pass value
-        objMultipleSelectionVC.arrContent = ["1","2","3","4","5","6","7"]  // Pass Array Data
-        
+//        objMultipleSelectionVC.arrContent = [1,2,3,4,5,6,7,8,9]  // Pass Array Data
+        objMultipleSelectionVC.arrContent = ["IPhone","IMac","IPad","MacBook","IPod","MacMini","Apple TV"]  // Pass Array Data
         objMultipleSelectionVC.backgroundColorDoneButton = UIColor.green
         objMultipleSelectionVC.backgroundColorHeaderView = UIColor.purple
         objMultipleSelectionVC.backgroundColorTableView = UIColor.darkGray
@@ -59,21 +41,15 @@ class PKHomeVC: UIViewController {
         objMultipleSelectionVC.backgroundColorDoneTitle = UIColor.brown
         objMultipleSelectionVC.backgroundColorSelectALlTitle = UIColor.magenta
 
-
-
-
         
-        
-        if let returnValue = UserDefaults.standard.object(forKey: "indexPath") as? Int {
-            objMultipleSelectionVC.objGetHomeVCData = [returnValue]
-            objMultipleSelectionVC.objGetHomeVCIndexes = arrContentData
+        // Get Selected Index from PKMultipleSelectionVC
+        if let returnValue = UserDefaults.standard.object(forKey: "indexPath") as? [Int] {
+            objMultipleSelectionVC.objGetSelectedIndex = returnValue
         }
         
-        
         // Data Passing Usning Block
-        objMultipleSelectionVC.invitedUsers = { selectedUsers, index in
-            print("data is \(selectedUsers)",index)
-            self.btnClickMe.setTitle("\(selectedUsers)", for: UIControlState.normal)
+        objMultipleSelectionVC.passDataWithIndex = { arrayData, selectedIndex in
+            self.btnClickMe.setTitle("\(arrayData)", for: UIControlState.normal)
         }
         
         let transition = CATransition()
@@ -82,7 +58,6 @@ class PKHomeVC: UIViewController {
         //        transition.subtype = kCATransitionFade
         
         self.view!.layer.add(transition, forKey: kCATransition)
-        
         objMultipleSelectionVC.willMove(toParentViewController: self)
         self.view.addSubview(objMultipleSelectionVC.view)
         self.addChildViewController(objMultipleSelectionVC)

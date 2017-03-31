@@ -11,8 +11,7 @@ import UIKit
 class PKMultipleSelectionVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
     //Public Variable Declaration For Data Passing
-    public var objGetHomeVCData: [Int] = []                       // HomeVC
-    public var objGetHomeVCIndexes: [String] = []                     // HomeVC
+    public var objGetSelectedIndex: [Int] = []                       // HomeVC
     
     public var backgroundColorHeaderView: UIColor       = UIColor.init(colorLiteralRed: 76.0/255.0, green: 82.0/255.0, blue: 83.0/255.0, alpha: 1.0)
     public var backgroundColorDoneButton: UIColor       = UIColor.init(colorLiteralRed: 87.0/255.0, green: 188.0/255.0, blue: 100.0/255.0, alpha: 1.0)
@@ -20,19 +19,9 @@ class PKMultipleSelectionVC: UIViewController,UITableViewDelegate,UITableViewDat
     public var backgroundColorSelectALlTitle: UIColor   = UIColor.white
     public var backgroundColorCellTitle: UIColor        = UIColor.init(colorLiteralRed: 87.0/255.0, green: 188.0/255.0, blue: 100.0/255.0, alpha: 1.0)
     public var backgroundColorDoneTitle: UIColor        = UIColor.white
-
-
-
-    
-
-    
-    
-    public var passingDataToHomeVC: NSMutableArray = []     //PKMultipleSelectionVC
     
     var isSelectAll : Bool = false
-
-    public var invitedUsers:( _ data : String, _ index:NSMutableArray)->() = {_ in}
-
+    public var passDataWithIndex:( _ arryData : Any, _ selectedIndex:NSMutableArray)->() = {_ in}
 
     @IBOutlet weak var tblView: UITableView!
     @IBOutlet weak var btnSelectAll: UIButton!
@@ -40,113 +29,74 @@ class PKMultipleSelectionVC: UIViewController,UITableViewDelegate,UITableViewDat
     @IBOutlet weak var btnDone: UIButton!
     
     //Public Local Variable Declaration
-    
     public var arrContent: NSMutableArray = []
-    public var selectedData: NSMutableArray = []
-    
+    public var selectedIndex: NSMutableArray = []
     
     //MARK:- View Life Cycle
-    
-
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        arrContent = ["Mac","Iphone","IWatch","IPad","IPod","IMac"]
-//        arrContent = ["1","2","3","4","5","6","7","8","9","10","11","12"]
+        self.SetUpUI()   // Set UI
         
-        self.config()
         tblView.allowsMultipleSelection = true
         tblView.tableFooterView = UIView(frame: .zero)
     }
     
-    
-    func config()
+    override func viewWillAppear(_ animated: Bool) {
+        selectedIndex.addObjects(from: objGetSelectedIndex)
+        for i in objGetSelectedIndex {
+            let indexPath = IndexPath(row: i, section: 0)
+            tblView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
+        }
+        if(selectedIndex.count == arrContent.count){
+            btnSelectAll.setImage(UIImage(named: "Check"), for: UIControlState.normal)
+            isSelectAll = !isSelectAll;
+        }
+        self.tblView.reloadData()
+    }
+
+    //MARK: - Set Up UI
+    func SetUpUI()
     {
         self.tblView.backgroundColor = backgroundColorTableView
         self.btnSelectAll.setTitleColor(backgroundColorSelectALlTitle, for: UIControlState.normal)
         self.viewHeader.backgroundColor = backgroundColorHeaderView
         self.btnDone.backgroundColor = backgroundColorDoneButton
         self.btnDone.setTitleColor(backgroundColorDoneTitle, for: UIControlState.normal)
-        
     }
-    
-   public func setDataForMultipleSelection(data : [Any]){
-        
-        arrContent.addObjects(from: data)
-
-        print("arrContent is \(arrContent)")
-    
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
-        
-        selectedData.addObjects(from: objGetHomeVCData)
-        
-        for i in objGetHomeVCData {
-            let indexPath = IndexPath(row: i, section: 0)
-            tblView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
-        }
-        
-        if(selectedData.count == arrContent.count){
-            btnSelectAll.setImage(UIImage(named: "Check"), for: UIControlState.normal)
-            isSelectAll = !isSelectAll;
-        }
-        
-        
-        self.tblView.reloadData()
-    }
-
     
     //MARK: - Button Action
     @IBAction func btnBackClicked(_ sender: Any) {
-        
         self.willMove(toParentViewController: nil)
         self.view.removeFromSuperview()
         self.removeFromParentViewController()
     }
     
     @IBAction func btnSelectALL(_ sender: Any) {
-
-        selectedData.removeAllObjects()
-        
+        selectedIndex.removeAllObjects()
         if(!isSelectAll)
         {
             for i in arrContent {
-                
-                selectedData.add(arrContent.index(of: i))
+                selectedIndex.add(arrContent.index(of: i))
             }
         }
-        
-        print("Selected Data \(selectedData)")
-        
         let aStrImg:String = !isSelectAll ? "Check": "unCheck"
         btnSelectAll.setImage(UIImage(named:aStrImg), for: UIControlState.normal)
         isSelectAll = !isSelectAll
         tblView.reloadData()
-        
     }
-    @IBAction func btnDoneClicked(_ sender: Any) {
     
-        UserDefaults.standard.set(selectedData, forKey: "indexPath")
-        UserDefaults.standard.synchronize()
-        print("Data is \(selectedData)")
-        
-        for i  in selectedData {
-            
+    @IBAction func btnDoneClicked(_ sender: Any) {
+        let passingDataToHomeVC: NSMutableArray = []
+        for i  in selectedIndex {
             passingDataToHomeVC.add(arrContent[i as! Int])
         }
         
-        print("passingData \(passingDataToHomeVC)")
-        
-        let myDict = [ "Data": passingDataToHomeVC, "indexPath":selectedData] as [String : Any]
-        
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "notify"), object: myDict)
-        
         let strData = passingDataToHomeVC.componentsJoined(by: ",")
-        self.invitedUsers(strData, selectedData)
+        UserDefaults.standard.set(selectedIndex, forKey: "indexPath")
+        UserDefaults.standard.synchronize()
+    
+        self.passDataWithIndex(strData, selectedIndex)  // Passing Data Using Blocks to Parent VC
         
         self.willMove(toParentViewController: nil)
         self.view.removeFromSuperview()
@@ -159,36 +109,29 @@ class PKMultipleSelectionVC: UIViewController,UITableViewDelegate,UITableViewDat
         self.view.removeFromSuperview()
         self.removeFromParentViewController()
     }
-
 }
 
 // TableView Cell
 class Cell: UITableViewCell {
-    
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var imgVewCheckUnckeck: UIImageView!
-    
 }
-
 
 // Tableview Data Source & Delegate Method
 extension PKMultipleSelectionVC{
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
-    {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
         return 60.0;
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return arrContent.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? Cell
-        cell?.lblName.text = arrContent[indexPath.row] as? String
-        let aStrImg:String = selectedData.contains((indexPath.row)) ? "Check": "unCheck"
+        cell?.lblName.text = "\(arrContent[indexPath.row])"
+        let aStrImg:String = selectedIndex.contains((indexPath.row)) ? "Check": "unCheck"
         let image: UIImage =  UIImage(named: aStrImg)!;
         cell?.imgVewCheckUnckeck.image = image;
         cell?.contentView.backgroundColor = backgroundColorTableView
@@ -197,25 +140,20 @@ extension PKMultipleSelectionVC{
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if selectedData.contains(indexPath.row){
+        if selectedIndex.contains(indexPath.row){
             let index  = indexPath.row
-            selectedData.remove(index)
+            selectedIndex.remove(index)
         }else{
             let index  = indexPath.row
-            selectedData.add(index)
+            selectedIndex.add(index)
         }
-        
-        if(isSelectAll && selectedData.count != arrContent.count){
+        if(isSelectAll && selectedIndex.count != arrContent.count){
             btnSelectAll.setImage(UIImage(named: "unCheck"), for: UIControlState.normal)
             isSelectAll = !isSelectAll;
-        }else if(selectedData.count == arrContent.count){
+        }else if(selectedIndex.count == arrContent.count){
             btnSelectAll.setImage(UIImage(named: "Check"), for: UIControlState.normal)
             isSelectAll = !isSelectAll;
         }
-        
-        
-
         tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.none)
     }
 }
